@@ -1,0 +1,6 @@
+@medicurebackend_HostAddress = http://localhost:5249
+
+GET {{medicurebackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
