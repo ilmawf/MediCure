@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj": {}
+    "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj": {
+    "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj",
+        "projectUniqueName": "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj",
         "projectName": "medicurebackend",
-        "projectPath": "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj",
+        "projectPath": "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\MediCure\\medicurebackend\\obj\\",
+        "outputPath": "D:\\Projects\\medicure\\medicurebackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
