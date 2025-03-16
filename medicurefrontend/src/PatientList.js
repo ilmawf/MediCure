@@ -6,7 +6,7 @@ const PatientList = () => {
 
   // Fetching data from the backend API using Axios
   useEffect(() => {
-    axios.get('http://localhost:5000/api/patient')  // URL of your API
+    axios.get('http://localhost:5249/api/patient')  // URL of your API
       .then((response) => {
         setPatients(response.data);
       })
@@ -18,17 +18,20 @@ const PatientList = () => {
   return (
     <div>
       <h1>Patient List</h1>
-      <ul>
-        {patients.length > 0 ? (
-          patients.map((patient) => (
-            <li key={patient.patientID}>{patient.name}</li>
-          ))
-        ) : (
-          <p>No patients found.</p>
-        )}
-      </ul>
+      {patients.length === 0 ? (
+        <p>No patients found.</p>
+      ) : (
+        <ul>
+          {patients.map(patient => (
+            <li key={patient.patientID}>
+              {patient.name} - {patient.contact}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
 export default PatientList;
+

@@ -9,12 +9,22 @@ builder.Services.AddSwaggerGen();
 
 // Add the DbContext with the SQL Server connection string
 builder.Services.AddDbContext<HospitalContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 // Add controllers for API endpoints
 builder.Services.AddControllers();
 
-var app = builder.Build();
+// Add CORS to allow cross-origin requests (important for frontend-backend communication)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+        builder.AllowAnyOrigin()  // Allow any origin (you can restrict it for production)
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+});
+
+var app = builder.Build();  
 
 // Configure Swagger and Swagger UI for development
 if (app.Environment.IsDevelopment())
@@ -22,6 +32,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable CORS before other middleware
+app.UseCors("AllowAll");
 
 // Enable HTTPS redirection
 app.UseHttpsRedirection();
