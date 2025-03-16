@@ -168,3 +168,5 @@ D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\refint\medicurebackend.dll
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\medicurebackend.pdb
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\medicurebackend.genruntimeconfig.cache
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\ref\medicurebackend.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
