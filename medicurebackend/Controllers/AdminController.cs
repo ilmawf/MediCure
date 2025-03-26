@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using medicurebackend.Models;
 
 namespace medicurebackend.Controllers
 {
@@ -9,20 +11,87 @@ namespace medicurebackend.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        // Admin-specific methods
+        private readonly HospitalContext _context;
 
-        [HttpGet("get-users")]
-        public IActionResult GetUsers()
+        public AdminController(HospitalContext context)
         {
-            // Logic to return all users or manage the system
-            return Ok(new { Message = "List of users (Admin access)" });
+            _context = context;
         }
 
-        [HttpPost("create-doctor")]
-        public IActionResult CreateDoctor([FromBody] Doctor doctor)
+        // GET: api/Admin/get-users
+        [HttpGet("get-users")]
+        public async Task<IActionResult> GetUsers()
         {
-            // Logic for creating a new doctor (only Admin can create)
+            // Logic to return all users (Admin, Doctor, Patient, etc.)
+            var users = await _context.Users.ToListAsync();  // Fetch all users from the Users table
+            if (users == null || !users.Any())
+            {
+                return NotFound(new { Message = "No users found." });
+            }
+
+            return Ok(users);  // Return the list of users
+        }
+
+        // POST: api/Admin/create-doctor
+        [HttpPost("create-doctor")]
+        public async Task<IActionResult> CreateDoctor([FromBody] Doctor doctor)
+        {
+            if (doctor == null)
+            {
+                return BadRequest(new { Message = "Invalid doctor data." });
+            }
+
+            // You can add validation or additional logic here to check for duplicate doctors or assign default settings
+
+            // Add the new doctor to the database
+            _context.Doctors.Add(doctor);
+            await _context.SaveChangesAsync();  // Save the doctor to the database
+
             return Ok(new { Message = "Doctor created successfully!" });
+        }
+
+        // PUT: api/Admin/update-doctor/{id}
+        [HttpPut("update-doctor/{id}")]
+        public async Task<IActionResult> UpdateDoctor(int id, [FromBody] Doctor doctor)
+        {
+            if (doctor == null || doctor.DoctorID != id)
+            {
+                return BadRequest(new { Message = "Invalid doctor data or mismatched ID." });
+            }
+
+            // Find the doctor to update
+            var existingDoctor = await _context.Doctors.FindAsync(id);
+            if (existingDoctor == null)
+            {
+                return NotFound(new { Message = "Doctor not found." });
+            }
+
+            // Update the doctor details
+            existingDoctor.Name = doctor.Name;
+            existingDoctor.Specialty = doctor.Specialty;
+            existingDoctor.ContactNumber = doctor.ContactNumber;
+            existingDoctor.Email = doctor.Email;
+
+            await _context.SaveChangesAsync();  // Save updated doctor to the database
+
+            return Ok(new { Message = "Doctor updated successfully!" });
+        }
+
+        // DELETE: api/Admin/delete-doctor/{id}
+        [HttpDelete("delete-doctor/{id}")]
+        public async Task<IActionResult> DeleteDoctor(int id)
+        {
+            var doctor = await _context.Doctors.FindAsync(id);
+            if (doctor == null)
+            {
+                return NotFound(new { Message = "Doctor not found." });
+            }
+
+            // Remove the doctor from the database
+            _context.Doctors.Remove(doctor);
+            await _context.SaveChangesAsync();  // Save changes to the database
+
+            return Ok(new { Message = "Doctor deleted successfully!" });
         }
     }
 }

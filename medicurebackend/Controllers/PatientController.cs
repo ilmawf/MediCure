@@ -1,28 +1,32 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using medicurebackend.Models;
 
 namespace medicurebackend.Controllers
 {
+    // Only Patients can access this controller
+    [Authorize(Roles = "Patient")]
     [Route("api/[controller]")]
     [ApiController]
     public class PatientController : ControllerBase
     {
         private readonly HospitalContext _context;
 
+        // Constructor to inject the DbContext
         public PatientController(HospitalContext context)
         {
             _context = context;
         }
 
-        // GET: api/Patient
+        // GET: api/Patient - Fetch all patients (this can be restricted to Admins only)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
             return await _context.Patients.ToListAsync();
         }
 
-        // GET: api/Patient/5
+        // GET: api/Patient/5 - Get details for a specific patient by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatient(int id)
         {
@@ -36,7 +40,7 @@ namespace medicurebackend.Controllers
             return patient;
         }
 
-        // POST: api/Patient
+        // POST: api/Patient - Create a new patient (should be handled by Admin, not Patient)
         [HttpPost]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
@@ -46,7 +50,7 @@ namespace medicurebackend.Controllers
             return CreatedAtAction("GetPatient", new { id = patient.PatientID }, patient);
         }
 
-        // PUT: api/Patient/5
+        // PUT: api/Patient/5 - Update a patient's information (only the Patient themselves should update their record)
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPatient(int id, Patient patient)
         {
@@ -76,7 +80,7 @@ namespace medicurebackend.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Patient/5
+        // DELETE: api/Patient/5 - Delete a patient's record (should be restricted to Admins)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {

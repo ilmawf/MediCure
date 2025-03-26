@@ -3,7 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using medicurebackend.Models; 
+using medicurebackend.Models;
+using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace medicurebackend.Controllers
 {
@@ -24,7 +26,12 @@ namespace medicurebackend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDTO userDTO)
         {
-            // You can add logic here to check if the user already exists
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDTO.Username);
+            if (existingUser != null)
+            {
+                return BadRequest(new { Message = "User already exists!" });
+            }
+
             var user = new User
             {
                 Username = userDTO.Username,
@@ -43,11 +50,13 @@ namespace medicurebackend.Controllers
         {
             var user = _context.Users.FirstOrDefault(u => u.Username == userDTO.Username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(userDTO.Password, user.Password)) // Verify hashed password
+            // Validate credentials
+            if (user == null || !BCrypt.Net.BCrypt.Verify(userDTO.Password, user.Password))  // Verify hashed password
             {
                 return Unauthorized(new { Message = "Invalid credentials!" });
             }
 
+            // Generate and return the JWT token
             var token = GenerateJwtToken(user);
             return Ok(new AuthResponseDTO { Token = token });
         }
@@ -57,19 +66,25 @@ namespace medicurebackend.Controllers
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role)  // Add the role to the claims
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString() ?? string.Empty),  
+                new Claim(ClaimTypes.Name, user.Username ?? string.Empty),
+                new Claim(ClaimTypes.Role, user.Role ?? string.Empty)  // Assign role claim
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("JWT Key is missing from configuration.");
+            }
+
+            var creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)), SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(1),  // Token expiry time
-                signingCredentials: creds);
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

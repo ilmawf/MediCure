@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<HospitalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
 // Add JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -57,8 +58,9 @@ app.UseCors("AllowAll");
 // Enable HTTPS redirection
 app.UseHttpsRedirection();
 
-// Use authorization middleware
-app.UseAuthorization();
+// Use authentication and authorization middleware
+app.UseAuthentication();  
+app.UseAuthorization();  
 
 // Map controllers (API endpoints)
 app.MapControllers();

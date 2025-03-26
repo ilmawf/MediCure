@@ -7,6 +7,6 @@ namespace medicurebackend.Models
         public int DoctorID { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
     }
 }

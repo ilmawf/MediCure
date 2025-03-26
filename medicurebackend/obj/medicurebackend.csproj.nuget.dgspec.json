@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj": {}
+    "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj": {
+    "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj",
+        "projectUniqueName": "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj",
         "projectName": "medicurebackend",
-        "projectPath": "D:\\Projects\\medicure\\medicurebackend\\medicurebackend.csproj",
+        "projectPath": "D:\\Projects\\MediCure\\medicurebackend\\medicurebackend.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\medicure\\medicurebackend\\obj\\",
+        "outputPath": "D:\\Projects\\MediCure\\medicurebackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[6.0.0, )"

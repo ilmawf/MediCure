@@ -170,3 +170,4 @@ D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\medicurebackend.genruntime
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\ref\medicurebackend.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\BCrypt.Net-Next.dll
