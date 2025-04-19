@@ -7,9 +7,12 @@ D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\medicurebackend.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\medicurebackend.pdb
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Azure.Core.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Azure.Identity.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\BCrypt.Net-Next.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Humanizer.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Build.Locator.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -45,6 +48,7 @@ D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.OpenApi.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -168,6 +172,3 @@ D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\refint\medicurebackend.dll
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\medicurebackend.pdb
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\medicurebackend.genruntimeconfig.cache
 D:\Projects\MediCure\medicurebackend\obj\Debug\net8.0\ref\medicurebackend.dll
-D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
-D:\Projects\MediCure\medicurebackend\bin\Debug\net8.0\BCrypt.Net-Next.dll

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("medicurebackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+602507af83c26f168a14ceff8e2004fb9b12bd58")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3625ddd01a4e8481707a38c9e311eb9cd845bf07")]
 [assembly: System.Reflection.AssemblyProductAttribute("medicurebackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("medicurebackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

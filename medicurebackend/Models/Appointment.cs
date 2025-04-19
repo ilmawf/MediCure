@@ -8,5 +8,8 @@ namespace medicurebackend.Models
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public string? Status { get; set; }
+
+        public Patient Patient {get; set;}
+        public Doctor Doctor {get; set;}
     }
 }

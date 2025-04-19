@@ -56,7 +56,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 // Enable HTTPS redirection
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 // Use authentication and authorization middleware
 app.UseAuthentication();  

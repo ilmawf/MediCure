@@ -69,6 +69,10 @@ namespace medicurebackend.Migrations
 
                     b.HasKey("AppointmentID");
 
+                    b.HasIndex("DoctorID");
+
+                    b.HasIndex("PatientID");
+
                     b.ToTable("Appointments");
                 });
 
@@ -81,7 +85,7 @@ namespace medicurebackend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BillingID"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("DECIMAL(18,2)");
 
                     b.Property<DateTime>("BillDate")
                         .HasColumnType("datetime2");
@@ -181,6 +185,25 @@ namespace medicurebackend.Migrations
                     b.HasKey("PatientID");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("medicurebackend.Models.Appointment", b =>
+                {
+                    b.HasOne("medicurebackend.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("medicurebackend.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
                 });
 #pragma warning restore 612, 618
         }

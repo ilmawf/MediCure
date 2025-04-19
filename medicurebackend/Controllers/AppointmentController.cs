@@ -40,6 +40,17 @@ namespace medicurebackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
+            // Check if the doctor is available at the requested time
+            var existingAppointment = await _context.Appointments
+                .FirstOrDefaultAsync(a => a.DoctorID == appointment.DoctorID &&
+                                          a.Date == appointment.Date &&
+                                          a.Time == appointment.Time);
+
+            if (existingAppointment != null)
+            {
+                return BadRequest("This doctor is already booked for the selected time.");
+            }
+
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
@@ -95,6 +106,22 @@ namespace medicurebackend.Controllers
         private bool AppointmentExists(int id)
         {
             return _context.Appointments.Any(e => e.AppointmentID == id);
+        }
+
+        // Get all appointments for a doctor
+        [HttpGet("doctor/{doctorId}")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsForDoctor(int doctorId)
+        {
+            var appointments = await _context.Appointments
+                .Where(a => a.DoctorID == doctorId)
+                .ToListAsync();
+
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+
+            return appointments;
         }
     }
 }
