@@ -1,0 +1,467 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Top Bar Styles */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498db; /* Blue background */
+    color: white;
+    padding: 10px 40px;
+  }
+  
+  .top-left p {
+    margin-right: 20px;
+    font-size: 14px;
+  }
+  
+  .top-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .top-right .login-btn {
+    background-color: white;
+    color: #0b8fac;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .top-right .login-btn:hover {
+    background-color: transparent;
+  }
+  
+  /* Header Styles */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 40px;  /* Adjust padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 80px;  /* Set a fixed height for the header */
+  }
+  
+  /* Logo Section */
+  .logo img {
+    height: 120px;  /* Logo size */
+    width: auto;    /* Maintain aspect ratio */
+  }
+  
+  /* Navigation Links Styles */
+  .nav-links ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;  /* Align links to the right */
+    gap: 20px;  /* Space between links */
+  }
+  
+  .nav-links ul li {
+    margin: 0;  /* Remove margin */
+  }
+  
+  .nav-links ul li a {
+    text-decoration: none;
+    color: #0b8fac; /* Primary color */
+    font-size: 16px;
+  }
+  
+  .nav-links ul li a:hover {
+    color: #7bc1b7; /* Secondary color on hover */
+    outline: 2px solid #7bc1b7; /* Add outline to active link */
+  }
+  
+  /* Right Side Section (Contact) */
+  .right-side {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .right-side p {
+    font-size: 16px;
+    color: #333;
+  }
+
+  /* Hero Image */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 400px;  /* Adjust height as needed */
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensure the image covers the space */
+  }
+  
+  /* Text Overlay */
+  .hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .hero-text h1 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .hero-text p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .cta-btn {
+    background-color: #0b8fac;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cta-btn:hover {
+    background-color: #7bc1b7;
+  }
+
+ /* Cards Section Styles */
+.cards-section {
+    display: flex;
+    justify-content: space-around;  /* Distribute cards evenly */
+    padding: 50px 20px;
+    gap: 10px;  /* Reduced gap between the cards (adjust this value as needed) */
+  }
+  
+  .card {
+    background-color: #f0f8ff; /* Light background for each card */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Card shadow */
+    width: 250px;
+    height: 300px;  /* Set fixed height for cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space content within the card */
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Hide any part of the image that overflows the card */
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);  /* Hover effect to lift the card */
+  }
+  
+  .card-icon {
+    width: 100%;
+    height: 150px;  /* Set the height of the image container */
+    overflow: hidden; /* Hide overflow */
+  }
+  
+  .card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensures image fills the space without distorting */
+  }
+  
+  .card-content h3 {
+    font-size: 20px;
+    color: #0b8fac;  /* Primary color from logo */
+    margin-bottom: 10px;
+  }
+  
+  .card-content p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .card-btn {
+    background-color: #0b8fac;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .card-btn:hover {
+    background-color: #7bc1b7; /* Hover color */
+  }
+
+  /* Services Section - Full Image on Left, Overlay on Right */
+.services-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 20px;
+    gap: 30px;
+  }
+  
+  .services-container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .services-image {
+    width: 45%;  /* Set width of the image section */
+  }
+  
+  .services-image-content {
+    width: 100%;
+    height: auto;
+    object-fit: cover;  /* Ensure image fills the space */
+  }
+  
+  .services-list {
+    width: 50%;  /* Set width for the list of services */
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .services-list h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .services-list ul {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  
+  .services-list li {
+    margin-bottom: 10px;
+  }
+  
+  .services-list li a {
+    color: #0b8fac;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .services-list li a:hover {
+    color: #7bc1b7; /* Hover color */
+  }
+  
+  .view-all-btn {
+    background-color: #0b8fac;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-all-btn:hover {
+    background-color: #7bc1b7;
+  }  
+  /* Chatbot Styles */
+.chatbot-container {
+    position: fixed;  /* Fix the chatbot to the screen */
+    bottom: 20px;     /* Position from the bottom */
+    right: 20px;      /* Position from the right */
+    z-index: 1000;    /* Ensure it stays on top of other elements */
+  }
+  
+  .chatbot-btn {
+    background-color: #0b8fac;  /* Button color */
+    color: white;
+    border: none;
+    border-radius: 30px;  /* Round button edges */
+    padding: 10px 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* Space between the icon and text */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .chatbot-btn:hover {
+    background-color: #2980b9;  /* Hover color */
+  }
+  
+  .chat-icon {
+    width: 20px;
+    height: 20px;  /* Size of the icon inside the button */
+  }
+  
+  .chat-window {
+    position: absolute;
+    bottom: 70px;  /* Position it just above the button */
+    right: 0;
+    width: 300px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .chat-header h3 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .chat-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-body p {
+    margin-bottom: 10px;
+  }
+  
+  .chat-body input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .send-btn {
+    background-color: #0b8fac;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .send-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .top-bar {
+      padding: 10px 20px;
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .top-right {
+      margin-top: 10px;
+    }
+  
+    /* Header Section */
+    .header {
+      flex-direction: column;
+      padding: 15px 20px;
+      height: auto;
+    }
+  
+    .logo img {
+      height: 100px;  /* Reduce logo size on mobile */
+    }
+  
+    .nav-links ul {
+      flex-direction: column; /* Stack navigation links vertically */
+      gap: 5px;
+      margin-top: 20px;
+    }
+  
+    .nav-links ul li {
+      margin-bottom: 10px;
+    }
+  
+    .right-side {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-text h1 {
+      font-size: 28px;  /* Smaller font size on mobile */
+    }
+  
+    .hero-text p {
+      font-size: 16px;  /* Smaller font size on mobile */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cards-section {
+      flex-direction: column;  /* Stack the cards vertically on mobile */
+      align-items: center;
+      gap: 10px;  /* Reduce gap on mobile as well */
+    }
+  
+    .card {
+      width: 80%;  /* Make the cards take full width on smaller screens */
+    }
+  }
+  @media (max-width: 768px) {
+    .services-section {
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+  
+    .services-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .services-image {
+      width: 80%;
+      margin-bottom: 20px;
+    }
+  
+    .services-list {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .chat-window {
+      width: 250px; /* Adjust chat window size for mobile */
+    }
+  }
