@@ -3,6 +3,8 @@ using medicurebackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using medicurebackend.Hubs;  // Add namespace for SignalR Hub
+using medicurebackend.Services;  // Add namespace for EmailService
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add the DbContext with the SQL Server connection string
+// Add DbContext for SQL Server
 builder.Services.AddDbContext<HospitalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-// Add JWT authentication
+// Add JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -43,27 +45,42 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader());
 });
 
-var app = builder.Build();  
+// Register SignalR service (this allows communication via SignalR)
+builder.Services.AddSignalR();
 
-// Configure Swagger and Swagger UI for development
+// Register EmailService (optional, for sending emails via a service like Mailgun or Brevo)
+builder.Services.AddSingleton<EmailService>(provider =>
+    new EmailService(
+        builder.Configuration["Mailjet:ApiKey"], 
+        builder.Configuration["Mailjet:ApiSecret"], 
+        builder.Configuration["Mailjet:FromEmail"]
+    )
+);
+
+var app = builder.Build();
+
+// Configure Swagger and Swagger UI for development (API documentation)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Enable CORS before other middleware
+// Enable CORS before other middleware (for frontend-backend communication)
 app.UseCors("AllowAll");
 
-// Enable HTTPS redirection
-//app.UseHttpsRedirection();
+// Enable HTTPS redirection (optional, for production environments)
+// app.UseHttpsRedirection();
 
 // Use authentication and authorization middleware
-app.UseAuthentication();  
-app.UseAuthorization();  
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Map controllers (API endpoints)
 app.MapControllers();
+
+// Map the SignalR Hub to a route for real-time communication
+app.MapHub<NotificationHub>("/notificationHub");  // Maps the SignalR hub to the /notificationHub endpoint
 
 // Start the application
 app.Run();

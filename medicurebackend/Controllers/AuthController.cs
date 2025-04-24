@@ -6,6 +6,8 @@ using System.Text;
 using medicurebackend.Models;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace medicurebackend.Controllers
 {
@@ -22,7 +24,7 @@ namespace medicurebackend.Controllers
             _configuration = configuration;
         }
 
-        // Register a new user (Admin, Doctor, Patient, etc.)
+        // Register a new user (Admin, Doctor, Patient, Nurse, Chemist, Receptionist)
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDTO userDTO)
         {
@@ -30,6 +32,13 @@ namespace medicurebackend.Controllers
             if (existingUser != null)
             {
                 return BadRequest(new { Message = "User already exists!" });
+            }
+
+            // Ensure the role is valid
+            var validRoles = new[] { "Admin", "Doctor", "Patient", "Nurse", "Chemist", "Receptionist" };
+            if (!validRoles.Contains(userDTO.Role))
+            {
+                return BadRequest(new { Message = "Invalid role!" });
             }
 
             var user = new User
@@ -64,7 +73,7 @@ namespace medicurebackend.Controllers
         // Generate JWT Token
         private string GenerateJwtToken(User user)
         {
-            var claims = new[]
+            var claims = new[] 
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString() ?? string.Empty),  
                 new Claim(ClaimTypes.Name, user.Username ?? string.Empty),

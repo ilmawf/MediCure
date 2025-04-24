@@ -8,5 +8,8 @@ namespace medicurebackend.Models
         public DateTime DateOfBirth { get; set; }
         public string? Contact { get; set; }
         public string? MedicalHistory { get; set; }
+         public int DoctorID { get; set; }  
+        public string Ward { get; set; } 
+
     }
 }
