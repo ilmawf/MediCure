@@ -1,8 +1,11 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './styles/styles.css';  // Import global CSS
-import HomePage from './components/HomePage'; 
+import './styles/styles.css';
+import HomePage from './components/HomePage';
+import LoginPage from './components/LoginPage';  // Import the LoginPage component
+import AdminDashboard from './components/AdminDashboard';  // Import the Admin Dashboard component
+import PrivateRoute from './components/PrivateRoute';  // Import the PrivateRoute component
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -15,7 +18,9 @@ function App() {
           </div>
 
           <div className="top-right">
-            <button className="login-btn">Login</button>
+            <button className="login-btn">
+              <Link to="/login">Login</Link>  {/* Link to login page */}
+            </button>
           </div>
         </div>
 
@@ -38,8 +43,20 @@ function App() {
           </nav>
         </header>
 
+        {/* Routes for different pages */}
         <Routes>
-           <Route path="/" element={<HomePage />} />
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />  {/* Login route */}
+
+          {/* Protected Routes */}
+          <PrivateRoute
+            path="/admin-dashboard"
+            component={AdminDashboard}  // Admin Dashboard route
+            allowedRoles={['Admin']}  // Only Admin can access
+          />
+          
+          {/* You can create similar routes for Doctor and Patient dashboards */}
         </Routes>
       </div>
     </Router>
