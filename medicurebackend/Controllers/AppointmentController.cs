@@ -35,7 +35,7 @@ namespace medicurebackend.Controllers
 
             if (appointment == null)
             {
-                return NotFound();
+                return NotFound();  // Return 404 if appointment is not found
             }
 
             return appointment;
@@ -46,7 +46,7 @@ namespace medicurebackend.Controllers
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
             // Ensure appointment is not scheduled in the past
-            if (appointment.Date < DateTime.Today)
+            if (appointment.AppointmentDate < DateTime.Today)
             {
                 return BadRequest("Appointments cannot be scheduled in the past.");
             }
@@ -54,8 +54,8 @@ namespace medicurebackend.Controllers
             // Check if the doctor is available at the requested time
             var existingAppointment = await _context.Appointments
                 .FirstOrDefaultAsync(a => a.DoctorID == appointment.DoctorID &&
-                                          a.Date == appointment.Date &&
-                                          a.Time == appointment.Time);
+                                          a.AppointmentDate == appointment.AppointmentDate &&
+                                          a.AppointmentTime == appointment.AppointmentTime);
 
             if (existingAppointment != null)
             {
@@ -63,9 +63,10 @@ namespace medicurebackend.Controllers
             }
 
             // Parse the Time if it's in string format (Ensure it's stored as TimeSpan)
-            if (appointment.Time != null)
+            if (appointment.AppointmentTime != null)
             {
-                appointment.Time = TimeSpan.Parse(appointment.Time.ToString());  // Convert to TimeSpan if it's in string format
+                appointment.AppointmentTime = TimeSpan.Parse(appointment.AppointmentTime.Value.ToString());
+ 
             }
 
             _context.Appointments.Add(appointment);
@@ -90,7 +91,7 @@ namespace medicurebackend.Controllers
         {
             if (id != appointment.AppointmentID)
             {
-                return BadRequest();
+                return BadRequest();  // Return 400 if IDs do not match
             }
 
             _context.Entry(appointment).State = EntityState.Modified;
@@ -113,7 +114,7 @@ namespace medicurebackend.Controllers
             {
                 if (!AppointmentExists(id))
                 {
-                    return NotFound();
+                    return NotFound();  // Return 404 if appointment does not exist
                 }
                 else
                 {
@@ -121,7 +122,7 @@ namespace medicurebackend.Controllers
                 }
             }
 
-            return NoContent();
+            return NoContent();  // Return 204 after successful update
         }
 
         // DELETE: api/Appointment/5
@@ -131,13 +132,13 @@ namespace medicurebackend.Controllers
             var appointment = await _context.Appointments.FindAsync(id);
             if (appointment == null)
             {
-                return NotFound();
+                return NotFound();  // Return 404 if appointment is not found
             }
 
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return NoContent();  // Return 204 after successful deletion
         }
 
         private bool AppointmentExists(int id)
@@ -158,7 +159,7 @@ namespace medicurebackend.Controllers
                 return NotFound("No appointments found for this doctor.");
             }
 
-            return appointments;
+            return appointments;  // Return list of appointments
         }
 
         // Get all appointments for a patient
@@ -174,27 +175,29 @@ namespace medicurebackend.Controllers
                 return NotFound("No appointments found for this patient.");
             }
 
-            return appointments;
+            return appointments;  // Return list of appointments
         }
 
         // GET recent appointments
         [HttpGet("recent")]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetRecentAppointments()
         {
-            var recentAppointments = await _context.Appointments
-                .OrderByDescending(a => a.AppointmentDate)
-                .Take(5)  // Limit to 5 most recent appointments
-                .Select(a => new
-                {
-                    a.AppointmentID,
-                    PatientName = a.Patient.Name,  // Assuming there is a related Patient entity
-                    DoctorName = a.Doctor.Name,    // Assuming there is a related Doctor entity
-                    a.AppointmentDate,
-                    a.Status
-                })
-                .ToListAsync();
+          var recentAppointments = await _context.Appointments
+            .OrderByDescending(a => a.AppointmentDate)
+            .Take(5)  // Limit to 5 most recent appointments
+            .Select(a => new
+            {
+                a.AppointmentID,
+                PatientName = a.Patient != null ? a.Patient.Name : "Unknown",  // Check for null before accessing Patient.Name
+                DoctorName = a.Doctor != null ? a.Doctor.Name : "Unknown",    // Check for null before accessing Doctor.Name
+                a.AppointmentDate,
+                a.Status
+            })
+            .ToListAsync();
 
-            return Ok(recentAppointments);
+        return Ok(recentAppointments);
+
+
         }
     }
 }

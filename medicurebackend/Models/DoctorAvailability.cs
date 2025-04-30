@@ -6,8 +6,8 @@ namespace medicurebackend.Models
     {
         public int DoctorAvailabilityID { get; set; }
         public int DoctorID { get; set; }
-        public DateTime StartTime { get; set; }  // The start time of the availability slot
-        public DateTime EndTime { get; set; }    // The end time of the availability slot
+        public TimeSpan StartTime { get; set; }  // The start time of the availability slot
+        public TimeSpan EndTime { get; set; }    // The end time of the availability slot
         public bool IsBooked { get; set; } = false; // Whether the time slot is already booked
     }
 }

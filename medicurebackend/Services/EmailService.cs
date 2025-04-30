@@ -1,44 +1,49 @@
-using SendinBlue.Client;
-using SendinBlue.Client.Api;
-using SendinBlue.Client.Model;
+using MailKit.Net.Smtp;
+using MimeKit;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace medicurebackend.Services
 {
     public class EmailService
     {
-        private readonly string _brevoApiKey;
-        private readonly string _fromEmail;
-        private readonly string _fromName;
+        private readonly string _smtpServer;
+        private readonly int _smtpPort;
+        private readonly string _smtpUser;
+        private readonly string _smtpPassword;
+        private readonly string _senderEmail;
 
-        public EmailService(string brevoApiKey, string fromEmail, string fromName)
+        // Constructor to inject configuration values for email
+        public EmailService(IConfiguration configuration)
         {
-            _brevoApiKey = brevoApiKey;
-            _fromEmail = fromEmail;
-            _fromName = fromName;
+            // Get SMTP settings from appsettings.json and ensure they're not null
+            _smtpServer = configuration["Email:SmtpServer"] ?? throw new ArgumentNullException("SMTP Server is not configured.");
+            _smtpPort = int.Parse(configuration["Email:SmtpPort"] ?? "587");  // Defaulting to 587 if missing
+            _smtpUser = configuration["Email:SmtpUser"] ?? throw new ArgumentNullException("SMTP User is not configured.");
+            _smtpPassword = configuration["Email:SmtpPassword"] ?? throw new ArgumentNullException("SMTP Password is not configured.");
+            _senderEmail = configuration["Email:SenderEmail"] ?? throw new ArgumentNullException("Sender Email is not configured.");
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        // Method to send email
+        public async Task SendEmailAsync(string recipientEmail, string subject, string body)
         {
-            var apiInstance = new TransactionalEmailsApi();
-            var sendSmtpEmail = new SendSmtpEmail(
-                sender: new SendSmtpEmailSender(_fromEmail, _fromName),
-                to: new List<SendSmtpEmailTo> { new SendSmtpEmailTo(toEmail) },
-                subject: subject,
-                htmlContent: message
-            );
+            // Create the email message
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress("MediCure Health", _senderEmail));
+            emailMessage.To.Add(new MailboxAddress("", recipientEmail));
+            emailMessage.Subject = subject;
 
-            try
+            // Create the email body (you can use TextBody or HtmlBody)
+            var bodyBuilder = new BodyBuilder { TextBody = body };  // Text email
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+
+            // Send the email using SMTP
+            using (var client = new SmtpClient())
             {
-                var response = await apiInstance.SendTransacEmailAsync(sendSmtpEmail);
-                if (response != null)
-                {
-                    Console.WriteLine("Email sent successfully: " + response.MessageId);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error sending email via Brevo: " + ex.Message);
+                await client.ConnectAsync(_smtpServer, _smtpPort, false);  // false = don't use SSL
+                await client.AuthenticateAsync(_smtpUser, _smtpPassword);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
             }
         }
     }

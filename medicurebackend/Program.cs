@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using medicurebackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using medicurebackend.Hubs;
+using medicurebackend.Services;
 using System.Text;
-using medicurebackend.Hubs;  // Add namespace for SignalR Hub
-using medicurebackend.Services;  // Add namespace for EmailService
+using medicurebackend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,14 +48,8 @@ builder.Services.AddCors(options =>
 // Register SignalR service (this allows communication via SignalR)
 builder.Services.AddSignalR();
 
-// Register EmailService (optional, for sending emails via a service like Mailgun or Brevo)
-builder.Services.AddSingleton<EmailService>(provider =>
-    new EmailService(
-        builder.Configuration["Mailjet:ApiKey"], 
-        builder.Configuration["Mailjet:ApiSecret"], 
-        builder.Configuration["Mailjet:FromEmail"]
-    )
-);
+// Register EmailService as a Singleton and inject configuration from appsettings.json
+builder.Services.AddSingleton<EmailService>();  // Register EmailService as Singleton
 
 var app = builder.Build();
 

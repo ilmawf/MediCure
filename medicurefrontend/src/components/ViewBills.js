@@ -25,7 +25,7 @@ const ViewBills = () => {
     };
 
     fetchBills();
-  }, [patientId]);
+  }, [patientId, token]);
 
   return (
     <div>

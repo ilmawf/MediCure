@@ -48,14 +48,14 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />  {/* Login route */}
-
-          {/* Protected Routes */}
-          <PrivateRoute
+          {/* Protected Route */}
+          <Route
             path="/admin-dashboard"
-            component={AdminDashboard}  // Admin Dashboard route
-            allowedRoles={['Admin']}  // Only Admin can access
-          />
-          
+            element={
+              <PrivateRoute allowedRoles={['Admin']}>
+                <AdminDashboard />
+              </PrivateRoute>} />
+         
           {/* You can create similar routes for Doctor and Patient dashboards */}
         </Routes>
       </div>

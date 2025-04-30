@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using medicurebackend.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace medicurebackend.Controllers
 {
@@ -103,13 +105,12 @@ namespace medicurebackend.Controllers
         [HttpGet("my-patients")]
         public async Task<ActionResult<IEnumerable<Patient>>> GetMyPatients()
         {
-            var doctorId = User.Identity.Name; // Assuming doctor ID is stored in JWT
-
+            var doctorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var patients = await _context.Patients
-                .Where(p => p.DoctorID == doctorId)
+                .Where(p => p.DoctorID.ToString() == doctorId)
                 .ToListAsync();
 
-            if (patients == null || patients.Count == 0)
+            if (patients == null || !patients.Any())
             {
                 return NotFound("No patients found for this doctor.");
             }
@@ -121,10 +122,10 @@ namespace medicurebackend.Controllers
         [HttpPost("create-appointment")]
         public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment appointment)
         {
-            var doctorId = User.Identity.Name; // Assuming doctor ID is stored in JWT
+            var doctorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             // Only allow the doctor to create appointments for themselves
-            if (appointment.DoctorID != doctorId)
+            if (appointment.DoctorID.ToString() != doctorId)
             {
                 return Unauthorized("You can only create appointments for yourself.");
             }
@@ -141,30 +142,16 @@ namespace medicurebackend.Controllers
             return _context.Doctors.Any(e => e.DoctorID == id);
         }
 
-        [Authorize(Roles = "Doctor")]
-[Route("api/[controller]")]
-[ApiController]
-public class DoctorController : ControllerBase
-{
-    private readonly HospitalContext _context;
+        // GET: api/Doctor/appointments - Get all appointments for the doctor
+        [HttpGet("appointments")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetDoctorAppointments()
+        {
+            var doctorId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var appointments = await _context.Appointments
+                .Where(a => a.DoctorID.ToString() == doctorId)
+                .ToListAsync();
 
-    public DoctorController(HospitalContext context)
-    {
-        _context = context;
-    }
-
-    // GET: api/Doctor/appointments
-    [HttpGet("appointments")]
-    public async Task<ActionResult<IEnumerable<Appointment>>> GetDoctorAppointments()
-    {
-        var doctorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var appointments = await _context.Appointments
-            .Where(a => a.DoctorID == doctorId)
-            .ToListAsync();
-        
-        return appointments;
-    }
-}
-
+            return appointments;
+        }
     }
 }

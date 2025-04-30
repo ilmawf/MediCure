@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';  // Updated to use useNavigate
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();  // Using useNavigate instead of useHistory
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ const LoginPage = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem('token', data.token);  // Save token in localStorage
-      history.push('/admin-dashboard');  // Redirect to Admin Dashboard
+      navigate('/admin-dashboard');  // Redirect using navigate() instead of history.push()
     } else {
       alert('Invalid credentials');
     }

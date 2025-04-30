@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, allowedRoles, ...rest }) => {
-  const [role, setRole] = useState(null);
+const PrivateRoute = ({ children, allowedRoles }) => {
+  const token = localStorage.getItem('token');
+  let userRole = null;
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      setRole(decodedToken.Role);  // Extract role from JWT token
+  if (token) {
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      userRole = decoded?.Role;
+    } catch (error) {
+      console.error('Invalid token', error);
     }
-  }, []);
+  }
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        allowedRoles.includes(role) ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
+  if (!token || !allowedRoles.includes(userRole)) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

@@ -1,15 +1,17 @@
-using System;
-
 namespace medicurebackend.Models
 {
     public class Prescription
     {
         public int PrescriptionID { get; set; }
-        public int PatientID { get; set; }  // The patient to whom the prescription is given
-        public int DoctorID { get; set; }  // The doctor who created the prescription
-        public DateTime Date { get; set; }
-        public string Medication { get; set; }  // The prescribed medication
-        public string Dosage { get; set; }  // Dosage instructions
-        public string Instructions { get; set; }  // Any additional instructions
+        public int PatientID { get; set; }
+        public int DoctorID { get; set; }
+        
+        // Add the missing properties
+        public string? PrescriptionDetails { get; set; }  // Prescription information
+        public DateTime RequestedAt { get; set; }         // Prescription request date
+
+        // Assuming you have Patient and Doctor relationships
+        public Patient? Patient { get; set; }
+        public Doctor? Doctor { get; set; }
     }
 }

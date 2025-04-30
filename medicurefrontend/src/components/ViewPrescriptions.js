@@ -26,7 +26,7 @@ const ViewPrescriptions = () => {
     };
 
     fetchPrescriptions();
-  }, [patientId]);
+  }, [patientId, token]);
 
   return (
     <div>
