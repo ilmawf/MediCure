@@ -13,12 +13,16 @@ namespace medicurebackend.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-         public DbSet<Staff> Staff { get; set; }
-          public DbSet<DoctorAvailability> DoctorAvailability { get; set; }
+        public DbSet<Staff> Staff { get; set; }
+        public DbSet<DoctorAvailability> DoctorAvailability { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Medication> Medications { get; set; }
         public DbSet<Billing> Billings { get; set; }
-        public DbSet<Prescription> Prescriptions { get; set; } 
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
+
+       
+        
 
         // OnModelCreating to set up additional configurations for the models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,7 +32,15 @@ namespace medicurebackend.Models
                 .Property(b => b.Amount)
                 .HasColumnType("DECIMAL(18,2)");  // This ensures Amount has 18 digits, 2 decimal places
 
-            // You can add more model configurations here if necessary
+           
+
+            
+
+            
+          
+
+
+            
 
             base.OnModelCreating(modelBuilder);  // Always call base method
         }

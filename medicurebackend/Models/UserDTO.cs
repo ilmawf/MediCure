@@ -1,4 +1,4 @@
-// Models/UserDTO.cs
+
 public class UserDTO
 {
     public string? Username { get; set; }  // Username for the user
