@@ -1,10 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace medicurebackend.Models
 {
     public class User
     {
-        public int UserId { get; set; }          // Unique User identifier
-        public string? Username { get; set; }     // Username
-        public string? Password { get; set; }     // Password
-       public string? Role { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public required string Email { get; set; }
+        public required string PasswordHash { get; set; }  // Store password as hashed value for security
+        public required string Role { get; set; }  // E.g., admin, patient, staff
     }
 }

@@ -5,13 +5,11 @@ namespace medicurebackend.Models
         public int AppointmentID { get; set; }
         public int PatientID { get; set; }
         public int DoctorID { get; set; }
-        public Patient? Patient { get; set; }  // Patient object
-        public Doctor? Doctor { get; set; }    // Doctor object
-        public DateTime AppointmentDate { get; set; }  // Date of appointment
-        public TimeSpan? AppointmentTime { get; set; }  // Time of appointment
-        public string? Status { get; set; }  // Appointment status (e.g., Pending, Confirmed, etc.)
-        public required string PatientName { get; set; }  // Patient's name
-        public string? DoctorName { get; set; }   // Doctor's name
-        public required string PatientEmail { get; set; } // Patient's email address
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
+        public string? Status { get; set; }
+
+        public required Patient Patient {get; set;}
+        public required Doctor Doctor {get; set;}
     }
 }

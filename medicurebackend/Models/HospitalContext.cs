@@ -13,16 +13,9 @@ namespace medicurebackend.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Staff> Staff { get; set; }
-        public DbSet<DoctorAvailability> DoctorAvailability { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Medication> Medications { get; set; }
         public DbSet<Billing> Billings { get; set; }
-        public DbSet<Prescription> Prescriptions { get; set; }
-        public DbSet<Alert> Alerts { get; set; }
-
-       
-        
 
         // OnModelCreating to set up additional configurations for the models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
